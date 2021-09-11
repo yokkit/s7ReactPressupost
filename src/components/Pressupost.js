@@ -38,18 +38,18 @@ const Pressupost = () => {
   const countNumPaginas = (event) => {
     if (+event.target.value >= 0) {
       setNumPaginas(event.target.value);
-    } 
+    }
   };
   const countNumIdiomas = (event) => {
     if (+event.target.value >= 0) {
       setNumIdiomas(event.target.value);
-    } 
+    }
   };
   const buttonPaginasPlusHandler = () => {
     setNumPaginas(+numPaginas + 1);
   };
   const buttonPaginasMinusHandler = () => {
-    if (+numPaginas > 0){
+    if (+numPaginas > 0) {
       setNumPaginas(+numPaginas - 1);
     }
   };
@@ -100,7 +100,7 @@ const Pressupost = () => {
               type="text"
               id="num_paginas"
               name="num_paginas"
-              maxlength="5"
+              maxLength="5"
               value={showNumPaginasHandler()}
               onChange={countNumPaginas}
             />
@@ -110,16 +110,20 @@ const Pressupost = () => {
           </div>
           <div className="numIdiomasItem">
             <label htmlFor="num_idiomas">Número de idiomas</label>
-            <button type="button" onClick={buttonIdiomasPlusHandler}>+</button>
+            <button type="button" onClick={buttonIdiomasPlusHandler}>
+              +
+            </button>
             <input
               type="text"
               id="num_idiomas"
               name="num_idiomas"
-              maxlength="5"
+              maxLength="5"
               value={showNumIdiomasHandler()}
               onChange={countNumIdiomas}
             />
-            <button type="button" onClick={buttonIdiomasMinusHandler}>-</button>
+            <button type="button" onClick={buttonIdiomasMinusHandler}>
+              -
+            </button>
           </div>
         </Panel>
       )}

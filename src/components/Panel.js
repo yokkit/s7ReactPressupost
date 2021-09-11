@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Panel = styled.div`
     min-width:225px;
@@ -9,16 +9,14 @@ const Panel = styled.div`
     padding: .5rem;
     display: flex-start;
     align-items:center;
-    &{input{
+    input{
         margin-left:.5rem;
     }};
-    &{p {
+    p {
         font-size:12px;
         margin-top: 0;
         color: #ff0000;
-    }
-
-    }
+    }}
 `;
- 
+
 export default Panel;

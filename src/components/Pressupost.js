@@ -9,8 +9,6 @@ const Pressupost = () => {
   const [numIdiomas, setNumIdiomas] = useState(0);
   const [preuConsult, setPreuConsult] = useState(0);
   const [preuAds, setPreuAds] = useState(0);
-  const [isRedWeb, setIsRedWeb] = useState(false);
-  const [isRedIdiomas, setIsRedIdiomas] = useState(false);
 
   const valueHandlerWeb = (event) => {
     if (event.target.checked) {
@@ -39,19 +37,35 @@ const Pressupost = () => {
   };
   const countNumPaginas = (event) => {
     if (+event.target.value >= 0) {
-      setIsRedWeb(false);
       setNumPaginas(event.target.value);
-    } else {
-      setIsRedWeb(true);
-    }
+    } 
   };
   const countNumIdiomas = (event) => {
     if (+event.target.value >= 0) {
-      setIsRedIdiomas(false);
       setNumIdiomas(event.target.value);
-    } else {
-      setIsRedIdiomas(true);
+    } 
+  };
+  const buttonPaginasPlusHandler = () => {
+    setNumPaginas(+numPaginas + 1);
+  };
+  const buttonPaginasMinusHandler = () => {
+    if (+numPaginas > 0){
+      setNumPaginas(+numPaginas - 1);
     }
+  };
+  const showNumPaginasHandler = () => {
+    return numPaginas;
+  };
+  const buttonIdiomasPlusHandler = () => {
+    setNumIdiomas(+numIdiomas + 1);
+  };
+  const buttonIdiomasMinusHandler = () => {
+    if (+numIdiomas > 0) {
+      setNumIdiomas(+numIdiomas - 1);
+    }
+  };
+  const showNumIdiomasHandler = () => {
+    return numIdiomas;
   };
   useEffect(() => {
     let totalAmount =
@@ -77,27 +91,35 @@ const Pressupost = () => {
       </div>
       {isPanel && (
         <Panel>
-          <div>
+          <div className="numPaginasItem">
             <label htmlFor="num_paginas">Número de páginas</label>
+            <button type="button" onClick={buttonPaginasPlusHandler}>
+              +
+            </button>
             <input
-              type="number"
+              type="text"
               id="num_paginas"
               name="num_paginas"
-              defaultValue="0"
+              maxlength="5"
+              value={showNumPaginasHandler()}
               onChange={countNumPaginas}
             />
-            {isRedWeb && <p>Introduzca el número positivo</p>}
+            <button type="button" onClick={buttonPaginasMinusHandler}>
+              -
+            </button>
           </div>
-          <div>
+          <div className="numIdiomasItem">
             <label htmlFor="num_idiomas">Número de idiomas</label>
+            <button type="button" onClick={buttonIdiomasPlusHandler}>+</button>
             <input
-              type="number"
+              type="text"
               id="num_idiomas"
               name="num_idiomas"
-              defaultValue="0"
+              maxlength="5"
+              value={showNumIdiomasHandler()}
               onChange={countNumIdiomas}
             />
-            {isRedIdiomas && <p>Introduzca el número positivo</p>}
+            <button type="button" onClick={buttonIdiomasMinusHandler}>-</button>
           </div>
         </Panel>
       )}
@@ -109,7 +131,7 @@ const Pressupost = () => {
           name="consult"
           onClick={valueHandlerConsult}
         />
-        <label htmlFor="consult"> Una consultoria SEO (300&euro;)</label>
+        <label htmlFor="consult">Una consultoria SEO (300&euro;)</label>
       </div>
       <div>
         <input

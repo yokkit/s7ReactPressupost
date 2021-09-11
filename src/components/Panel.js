@@ -1,22 +1,32 @@
 import styled from "styled-components";
 
 const Panel = styled.div`
-    min-width:225px;
+    width:300px;
     background-color: beige;
     border-radius: 5px;
-    border: solid black 1px;
+    border: solid black 2px;
     margin: .5rem;
-    padding: .5rem;
+    padding: 1rem;
     display: flex-start;
     align-items:center;
-    input{
-        margin-left:.5rem;
-    }};
-    p {
-        font-size:12px;
-        margin-top: 0;
-        color: #ff0000;
-    }}
+    .numPaginasItem, .numIdiomasItem {
+        button {
+            border: 1px solid orange;
+            border-radius: 5px;
+            color : white;
+            background-color: orange;
+            margin:.5rem;
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+        }
+        input {
+            width: 35px;
+            height: 20px;
+            border: none;
+            background-color: transparent;
+        }
+    }
 `;
 
 export default Panel;

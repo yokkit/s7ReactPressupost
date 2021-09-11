@@ -74,7 +74,21 @@ const Pressupost = () => {
       parseInt(preuConsult) +
       parseInt(preuAds);
     setTotal(totalAmount);
-  }, [preuWeb, numPaginas, numIdiomas, preuConsult, preuAds]);
+    const pressupostNou = {
+      "Una página web": preuWeb,
+      "Número de páginas": numPaginas,
+      "Número de idiomas": numIdiomas,
+      "Una consultoria SEO": preuConsult,
+      "Una campaña de Google Ads": preuAds,
+      "Precio total": total,
+    };
+    for (let key in pressupostNou) {
+      if (pressupostNou.hasOwnProperty(key)) {
+        let value = pressupostNou[key];
+        localStorage.setItem(key, value);
+      }
+    }
+  }, [preuWeb, numPaginas, numIdiomas, preuConsult, preuAds, total]);
 
   return (
     <div>

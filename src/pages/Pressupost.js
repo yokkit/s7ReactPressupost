@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Panel from "./Panel";
+import Panel from "../components/Panel";
 
 const Pressupost = () => {
   const [total, setTotal] = useState(0);

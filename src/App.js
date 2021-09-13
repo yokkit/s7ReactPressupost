@@ -1,6 +1,7 @@
 import React from 'react'
-import Pressupost from './components/Pressupost'
+import Routes from './application/Routes';
+import './App.css';
 
-const App = ()=> <Pressupost />
+const App = ()=> <Routes />
 
 export default App;

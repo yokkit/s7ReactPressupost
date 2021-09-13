@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Panel from "../components/Panel";
+import InfoMessage from "../components/InfoMessage";
 
 const Pressupost = () => {
   const [total, setTotal] = useState(0);
@@ -9,6 +10,7 @@ const Pressupost = () => {
   const [numIdiomas, setNumIdiomas] = useState(0);
   const [preuConsult, setPreuConsult] = useState(0);
   const [preuAds, setPreuAds] = useState(0);
+  const [showInfo, setShowInfo] = useState();
 
   const valueHandlerWeb = (event) => {
     if (event.target.checked) {
@@ -89,9 +91,15 @@ const Pressupost = () => {
       }
     }
   }, [preuWeb, numPaginas, numIdiomas, preuConsult, preuAds, total]);
+  const closeHandler = () => {
+    setShowInfo(null);
+  };
 
   return (
     <div>
+      {showInfo && (
+        <InfoMessage name={showInfo.name} onConfirm={closeHandler} />
+      )}
       <p>¿Qué quieres hacer?</p>
       <div>
         <input
@@ -121,6 +129,15 @@ const Pressupost = () => {
             <button type="button" onClick={buttonPaginasMinusHandler}>
               -
             </button>
+            <div
+              className="infoIcon"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowInfo({ name: "número de la página" });
+              }}
+            >
+              &#8505;
+            </div>
           </div>
           <div className="numIdiomasItem">
             <label htmlFor="num_idiomas">Número de idiomas</label>
@@ -138,6 +155,15 @@ const Pressupost = () => {
             <button type="button" onClick={buttonIdiomasMinusHandler}>
               -
             </button>
+            <div
+              className="infoIcon"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowInfo({ name: "número de idiomas" });
+              }}
+            >
+              &#8505;
+            </div>
           </div>
         </Panel>
       )}

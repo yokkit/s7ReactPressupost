@@ -5,9 +5,9 @@ import InfoMessage from "../components/InfoMessage";
 const Pressupost = () => {
   const [total, setTotal] = useState(0);
   const [isPanel, setIsPanel] = useState(false);
-  const [preuWeb, setPreuWeb] = useState(0);
   const [numPaginas, setNumPaginas] = useState(0);
   const [numIdiomas, setNumIdiomas] = useState(0);
+  const [preuWeb, setPreuWeb] = useState(0);
   const [preuConsult, setPreuConsult] = useState(0);
   const [preuAds, setPreuAds] = useState(0);
   const [showInfo, setShowInfo] = useState();
@@ -37,38 +37,7 @@ const Pressupost = () => {
       setPreuAds(0);
     }
   };
-  const countNumPaginas = (event) => {
-    if (+event.target.value >= 0) {
-      setNumPaginas(event.target.value);
-    }
-  };
-  const countNumIdiomas = (event) => {
-    if (+event.target.value >= 0) {
-      setNumIdiomas(event.target.value);
-    }
-  };
-  const buttonPaginasPlusHandler = () => {
-    setNumPaginas(+numPaginas + 1);
-  };
-  const buttonPaginasMinusHandler = () => {
-    if (+numPaginas > 0) {
-      setNumPaginas(+numPaginas - 1);
-    }
-  };
-  const showNumPaginasHandler = () => {
-    return numPaginas;
-  };
-  const buttonIdiomasPlusHandler = () => {
-    setNumIdiomas(+numIdiomas + 1);
-  };
-  const buttonIdiomasMinusHandler = () => {
-    if (+numIdiomas > 0) {
-      setNumIdiomas(+numIdiomas - 1);
-    }
-  };
-  const showNumIdiomasHandler = () => {
-    return numIdiomas;
-  };
+
   useEffect(() => {
     let totalAmount =
       parseInt(preuWeb) +
@@ -112,60 +81,14 @@ const Pressupost = () => {
         <label htmlFor="web">Una página web (500&euro;)</label>
       </div>
       {isPanel && (
-        <Panel>
-          <div className="numPaginasItem">
-            <label htmlFor="num_paginas">Número de páginas</label>
-            <button type="button" onClick={buttonPaginasPlusHandler}>
-              +
-            </button>
-            <input
-              type="text"
-              id="num_paginas"
-              name="num_paginas"
-              maxLength="5"
-              value={showNumPaginasHandler()}
-              onChange={countNumPaginas}
-            />
-            <button type="button" onClick={buttonPaginasMinusHandler}>
-              -
-            </button>
-            <div
-              className="infoIcon"
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowInfo({ name: "número de la página" });
-              }}
-            >
-              &#8505;
-            </div>
-          </div>
-          <div className="numIdiomasItem">
-            <label htmlFor="num_idiomas">Número de idiomas</label>
-            <button type="button" onClick={buttonIdiomasPlusHandler}>
-              +
-            </button>
-            <input
-              type="text"
-              id="num_idiomas"
-              name="num_idiomas"
-              maxLength="5"
-              value={showNumIdiomasHandler()}
-              onChange={countNumIdiomas}
-            />
-            <button type="button" onClick={buttonIdiomasMinusHandler}>
-              -
-            </button>
-            <div
-              className="infoIcon"
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowInfo({ name: "número de idiomas" });
-              }}
-            >
-              &#8505;
-            </div>
-          </div>
-        </Panel>
+        <Panel
+          numPaginas={numPaginas}
+          numIdiomas={numIdiomas}
+          showInfo={showInfo}
+          setNumIdiomas={setNumIdiomas}
+          setNumPaginas={setNumPaginas}
+          setShowInfo={setShowInfo}
+        />
       )}
       <div>
         <input

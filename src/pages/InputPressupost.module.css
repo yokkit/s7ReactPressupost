@@ -1,0 +1,14 @@
+.label {
+    display: block;
+}
+.saveButton {
+    margin: 10px 0 30px;
+}
+.preuTotal {
+    margin-bottom: 0;
+}
+.warning {
+    color: red;
+    font-size: 10px;
+    margin-top: 0;
+}

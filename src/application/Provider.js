@@ -8,6 +8,8 @@ export default function Provider({ children }) {
     preuWeb: 0,
     preuConsult: 0,
     preuAds: 0,
+    nomPressupost: "",
+    nomClient:""
   });
   return (
     <PressupostContext.Provider value={[pressupost, setPressupost]}>

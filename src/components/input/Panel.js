@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import PanelStyle from "./PanelStyle";
-import { PressupostContext } from "../application/Provider";
+import { PressupostContext } from "./InputPressupost";
 
 const Panel = (props) => {
   const [pressupost, setPresspost] = useContext(PressupostContext);
@@ -8,23 +8,20 @@ const Panel = (props) => {
   const countNumPaginas = (event) => {
     if (+event.target.value >= 0) {
       setPresspost({...pressupost, numPaginas:event.target.value});
-      // props.setNumPaginas(event.target.value);
     }
   };
   const countNumIdiomas = (event) => {
     if (+event.target.value >= 0) {
       setPresspost({...pressupost, numIdiomas: event.target.value});
-      // props.setNumIdiomas(event.target.value);
     }
   };
   const buttonPaginasPlusHandler = () => {
     setPresspost({...pressupost, numPaginas: +pressupost.numPaginas + 1});
-    // props.setNumPaginas(+props.numPaginas + 1);
   };
   const buttonPaginasMinusHandler = () => {
     if (+pressupost.numPaginas > 0) {
       setPresspost({...pressupost, numPaginas: +pressupost.numPaginas - 1});
-      // props.setNumPaginas(+props.numPaginas - 1);
+
     }
   };
   const showNumPaginasHandler = () => {
@@ -32,12 +29,10 @@ const Panel = (props) => {
   };
   const buttonIdiomasPlusHandler = () => {
     setPresspost({...pressupost, numIdiomas: +pressupost.numIdiomas + 1});
-    // props.setNumIdiomas(+props.numIdiomas + 1);
   };
   const buttonIdiomasMinusHandler = () => {
     if (+pressupost.numIdiomas > 0) {
       setPresspost({...pressupost, numIdiomas: +pressupost.numIdiomas - 1});
-      // props.setNumIdiomas(+props.numIdiomas - 1);
     }
   };
   const showNumIdiomasHandler = () => {

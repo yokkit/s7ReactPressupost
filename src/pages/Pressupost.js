@@ -5,10 +5,10 @@ import ShowPressupost from "../components/show/ShowPressupost";
 
 const PressupostStyle = styled.div`
   display: flex;
-  align-text: left;
-  @media (max-width: 720px) {
-    flex-flow: column;
-  }
+  flex-wrap: wrap;
+  align-items: flex-start;
+  width: 80%;
+  margin: auto;
 `;
 const Pressupost = () => {
   const [arrPressupost, setArrPressupost] = useState([]);
@@ -18,7 +18,10 @@ const Pressupost = () => {
         arrPressupost={arrPressupost}
         setArrPressupost={setArrPressupost}
       />
-      <ShowPressupost arrPressupost={arrPressupost} />
+      <ShowPressupost
+        arrPressupost={arrPressupost}
+        setArrPressupost={setArrPressupost}
+      />
     </PressupostStyle>
   );
 };

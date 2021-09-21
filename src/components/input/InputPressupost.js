@@ -8,6 +8,7 @@ export const PressupostContext = createContext();
 
 const InputPressupost = (props) => {
   const [pressupost, setPressupost] = useState({
+    idNum: 0,
     total: 0,
     numPaginas: 0,
     numIdiomas: 0,
@@ -20,6 +21,7 @@ const InputPressupost = (props) => {
   const [isPanel, setIsPanel] = useState(false);
   const [showInfo, setShowInfo] = useState();
   const [isSubmit, setIsSubmit] = useState(false);
+  const [count, setCount] = useState(0);
 
   const valueHandlerWeb = (event) => {
     if (event.target.checked) {
@@ -39,6 +41,7 @@ const InputPressupost = (props) => {
   const resetPressupost = () => {
     setPressupost({
       ...pressupost,
+      idNum: 0,
       total: 0,
       numPaginas: 0,
       numIdiomas: 0,
@@ -100,6 +103,13 @@ const InputPressupost = (props) => {
       pressupost.nomClient,
     ]
   );
+
+  useEffect(() =>{
+    setPressupost({...pressupost, idNum: count})
+  }, 
+  // eslint-disable-next-line
+  [count]);
+
   const closeHandler = () => {
     setShowInfo(null);
   };
@@ -120,8 +130,8 @@ const InputPressupost = (props) => {
       pressupost.nomPressupost &&
       pressupost.total > 0
     ) {
+      setCount((count) => count + 1);
       props.setArrPressupost((prevArr) => [...prevArr, pressupost]);
-      console.log(props.arrPressupost);
       resetPressupost();
       event.target.reset();
       setIsPanel(false);
@@ -133,11 +143,11 @@ const InputPressupost = (props) => {
 
   return (
     <PressupostContext.Provider value={[pressupost, setPressupost]}>
+      {showInfo && (
+        <InfoMessage name={showInfo.name} onConfirm={closeHandler} />
+      )}
       <div className={classes.inputGeneral}>
-        {showInfo && (
-          <InfoMessage name={showInfo.name} onConfirm={closeHandler} />
-        )}
-        <form onSubmit={submitHandler} >
+        <form onSubmit={submitHandler}>
           <p>¿Qué quieres hacer?</p>
           <div>
             <input
@@ -210,7 +220,7 @@ const InputPressupost = (props) => {
             Guardar
           </Button>
         </form>
-        </div>
+      </div>
     </PressupostContext.Provider>
   );
 };

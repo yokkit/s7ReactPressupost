@@ -7,18 +7,43 @@ import classes from "./InputPressupost.module.css";
 export const PressupostContext = createContext();
 
 const InputPressupost = (props) => {
+  const currentUrl = new URL(window.location.href);
+  const paramsString = currentUrl.search;
+  const searchParams = new URLSearchParams(paramsString);
+
   const [pressupost, setPressupost] = useState({
     idNum: 0,
-    total: 0,
-    numPaginas: 0,
-    numIdiomas: 0,
-    preuWeb: 0,
-    preuConsult: 0,
-    preuAds: 0,
-    nomPressupost: "",
-    nomClient: "",
+    total: parseInt(searchParams.get("total"))
+      ? parseInt(searchParams.get("total"))
+      : 0,
+    numPaginas: parseInt(searchParams.get("numPaginas"))
+      ? parseInt(searchParams.get("numPaginas"))
+      : 0,
+    numIdiomas: parseInt(searchParams.get("numIdiomas"))
+      ? parseInt(searchParams.get("numIdiomas"))
+      : 0,
+    preuWeb: parseInt(searchParams.get("preuWeb"))
+      ? parseInt(searchParams.get("preuWeb"))
+      : 0,
+    preuConsult: parseInt(searchParams.get("preuConsult"))
+      ? parseInt(searchParams.get("preuConsult"))
+      : 0,
+    preuAds: parseInt(searchParams.get("preuAds"))
+      ? parseInt(searchParams.get("preuAds"))
+      : 0,
+    nomPressupost: searchParams.get("nomPressupost")
+      ? searchParams.get("nomPressupost")
+      : "",
+    nomClient: searchParams.get("nomClient")
+      ? searchParams.get("nomClient")
+      : "",
   });
-  const [isPanel, setIsPanel] = useState(false);
+  const [isPanel, setIsPanel] = useState(
+    searchParams.get("numIdiomas") === "0" &&
+      searchParams.get("numPaginas") === "0"
+      ? false
+      : true
+  );
   const [showInfo, setShowInfo] = useState();
   const [isSubmit, setIsSubmit] = useState(false);
   const [count, setCount] = useState(props.arrPressupost.length);
@@ -104,16 +129,22 @@ const InputPressupost = (props) => {
 
   const storeLocalStorageArray = (arr) => {
     localStorage.setItem("pressupostList", JSON.stringify(arr));
-  }
+  };
 
-  useEffect(()=>{
-    storeLocalStorageArray(props.arrPressupost)
-  }, [props.arrPressupost])
+  const generateURLRealtime = () => {
+    const url = `?preuWeb=${pressupost.preuWeb}&numPaginas=${pressupost.numPaginas}&numIdiomas=${pressupost.numIdiomas}&preuConsult=${pressupost.preuConsult}&preuAds=${pressupost.preuAds}&total=${pressupost.total}&nomPressupost=${pressupost.nomPressupost}&nomClient=${pressupost.nomClient}`;
+    window.history.pushState("Object", "Title", url);
+  };
+
+  useEffect(() => {
+    storeLocalStorageArray(props.arrPressupost);
+  }, [props.arrPressupost]);
 
   useEffect(
     () => {
       addTotalAmount();
       storeLocalstorageItems();
+      generateURLRealtime();
     },
     // eslint-disable-next-line
     [
@@ -190,6 +221,7 @@ const InputPressupost = (props) => {
               value="500"
               id="web"
               name="web"
+              defaultChecked={Boolean(pressupost.preuWeb)}
               onClick={valueHandlerWeb}
             />
             <label htmlFor="web">Una página web (500&euro;)</label>
@@ -201,6 +233,7 @@ const InputPressupost = (props) => {
               value="300"
               id="consult"
               name="consult"
+              defaultChecked={Boolean(pressupost.preuConsult)}
               onClick={valueHandlerConsult}
             />
             <label htmlFor="consult">Una consultoria SEO (300&euro;)</label>
@@ -211,11 +244,14 @@ const InputPressupost = (props) => {
               value="200"
               id="ads"
               name="ads"
+              defaultChecked={Boolean(pressupost.preuAds)}
               onClick={valueHandlerAds}
             />
             <label htmlFor="ads">Una campaña de Google Ads (200&euro;)</label>
           </div>
-          <p className={classes.preuTotal}>Preu: <span>{pressupost.total}&euro;</span></p>
+          <p className={classes.preuTotal}>
+            Preu: <span>{pressupost.total}&euro;</span>
+          </p>
           {isSubmit && !pressupost.total && (
             <p className={classes.warning}>***Por favor, indica peticiones</p>
           )}
@@ -227,6 +263,7 @@ const InputPressupost = (props) => {
               type="text"
               id="nomPressupost"
               name="nomPressupost"
+              defaultValue={pressupost.nomPressupost}
               onChange={nomHandler}
             />
             {isSubmit && !pressupost.nomPressupost && (
@@ -243,6 +280,7 @@ const InputPressupost = (props) => {
               type="text"
               id="nomClient"
               name="nomClient"
+              defaultValue={pressupost.nomClient}
               onChange={nomHandler}
             />
             {isSubmit && !pressupost.nomClient && (

@@ -25,48 +25,62 @@ const InputPressupost = (props) => {
 
   const valueHandlerWeb = (event) => {
     if (event.target.checked) {
-      setPressupost({ ...pressupost, preuWeb: parseInt(event.target.value) });
+      setPressupost((prevState) => {
+        return { ...prevState, preuWeb: parseInt(event.target.value) };
+      });
       setIsPanel(true);
     } else {
-      setPressupost({
-        ...pressupost,
-        preuWeb: 0,
-        numPaginas: 0,
-        numIdiomas: 0,
+      setPressupost((prevState) => {
+        return {
+          ...prevState,
+          preuWeb: 0,
+          numPaginas: 0,
+          numIdiomas: 0,
+        };
       });
       setIsPanel(false);
     }
   };
 
   const resetPressupost = () => {
-    setPressupost({
-      ...pressupost,
-      idNum: 0,
-      total: 0,
-      numPaginas: 0,
-      numIdiomas: 0,
-      preuWeb: 0,
-      preuConsult: 0,
-      preuAds: 0,
-      nomPressupost: "",
-      nomClient: "",
+    setPressupost((prevState) => {
+      return {
+        ...prevState,
+        idNum: 0,
+        total: 0,
+        numPaginas: 0,
+        numIdiomas: 0,
+        preuWeb: 0,
+        preuConsult: 0,
+        preuAds: 0,
+        nomPressupost: "",
+        nomClient: "",
+      };
     });
   };
   const valueHandlerConsult = (event) => {
     if (event.target.checked) {
-      setPressupost({
-        ...pressupost,
-        preuConsult: parseInt(event.target.value),
+      setPressupost((prevState) => {
+        return {
+          ...prevState,
+          preuConsult: parseInt(event.target.value),
+        };
       });
     } else {
-      setPressupost({ ...pressupost, preuConsult: 0 });
+      setPressupost((prevState) => {
+        return { ...prevState, preuConsult: 0 };
+      });
     }
   };
   const valueHandlerAds = (event) => {
     if (event.target.checked) {
-      setPressupost({ ...pressupost, preuAds: parseInt(event.target.value) });
+      setPressupost((prevState) => {
+        return { ...prevState, preuAds: parseInt(event.target.value) };
+      });
     } else {
-      setPressupost({ ...pressupost, preuAds: 0 });
+      setPressupost((prevState) => {
+        return { ...prevState, preuAds: 0 };
+      });
     }
   };
 
@@ -76,7 +90,9 @@ const InputPressupost = (props) => {
       pressupost.numPaginas * pressupost.numIdiomas * 30 +
       pressupost.preuConsult +
       pressupost.preuAds;
-    setPressupost({ ...pressupost, total: totalAmount });
+    setPressupost((prevState) => {
+      return { ...prevState, total: totalAmount };
+    });
   };
 
   const storeLocalstorage = () => {
@@ -104,20 +120,31 @@ const InputPressupost = (props) => {
     ]
   );
 
-  useEffect(() =>{
-    setPressupost({...pressupost, idNum: count})
-  }, 
-  // eslint-disable-next-line
-  [count]);
+  useEffect(
+    () => {
+      setPressupost((prevState) => {
+        return { ...prevState, idNum: count };
+      });
+    },
+    // eslint-disable-next-line
+    [count]
+  );
 
   const closeHandler = () => {
     setShowInfo(null);
   };
   const nomHandler = (event) => {
     if (event.target.id === "nomPressupost") {
-      setPressupost({ ...pressupost, nomPressupost: event.target.value });
+      setPressupost((prevState) => {
+        return {
+          ...prevState,
+          nomPressupost: event.target.value.toUpperCase(),
+        };
+      });
     } else if (event.target.id === "nomClient") {
-      setPressupost({ ...pressupost, nomClient: event.target.value });
+      setPressupost((prevState) => {
+        return { ...prevState, nomClient: event.target.value.toUpperCase() };
+      });
     }
     return;
   };
@@ -180,7 +207,7 @@ const InputPressupost = (props) => {
             />
             <label htmlFor="ads">Una campaña de Google Ads (200&euro;)</label>
           </div>
-          <p className={classes.preuTotal}>Preu:{pressupost.total}&euro;</p>
+          <p className={classes.preuTotal}>Preu: <span>{pressupost.total}&euro;</span></p>
           {isSubmit && !pressupost.total && (
             <p className={classes.warning}>***Por favor, indica peticiones</p>
           )}

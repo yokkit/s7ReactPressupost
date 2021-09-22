@@ -66,7 +66,6 @@ const ShowPressupost = (props) => {
     setSearchWords(words);
   };
 
-  // 完全一致でなくとも検索できる方法を考える
   useEffect(
     () => {
       const filterArray = (words) => {

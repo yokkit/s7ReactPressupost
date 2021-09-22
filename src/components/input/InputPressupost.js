@@ -21,7 +21,7 @@ const InputPressupost = (props) => {
   const [isPanel, setIsPanel] = useState(false);
   const [showInfo, setShowInfo] = useState();
   const [isSubmit, setIsSubmit] = useState(false);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(props.arrPressupost.length);
 
   const valueHandlerWeb = (event) => {
     if (event.target.checked) {
@@ -95,17 +95,25 @@ const InputPressupost = (props) => {
     });
   };
 
-  const storeLocalstorage = () => {
+  const storeLocalstorageItems = () => {
     for (let key in pressupost) {
       let value = pressupost[key];
       localStorage.setItem(key, value);
     }
   };
 
+  const storeLocalStorageArray = (arr) => {
+    localStorage.setItem("pressupostList", JSON.stringify(arr));
+  }
+
+  useEffect(()=>{
+    storeLocalStorageArray(props.arrPressupost)
+  }, [props.arrPressupost])
+
   useEffect(
     () => {
       addTotalAmount();
-      storeLocalstorage();
+      storeLocalstorageItems();
     },
     // eslint-disable-next-line
     [

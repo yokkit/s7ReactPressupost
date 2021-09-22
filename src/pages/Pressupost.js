@@ -11,7 +11,12 @@ const PressupostStyle = styled.div`
   margin: auto;
 `;
 const Pressupost = () => {
-  const [arrPressupost, setArrPressupost] = useState([]);
+  const [arrPressupost, setArrPressupost] = useState(
+    localStorage.getItem("pressupostList")
+      ? JSON.parse(localStorage.getItem("pressupostList"))
+      : []
+  );
+
   return (
     <PressupostStyle>
       <InputPressupost

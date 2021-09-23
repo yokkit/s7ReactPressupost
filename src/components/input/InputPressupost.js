@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext } from "react";
 import Panel from "./Panel";
-import Button from "../ui/Button";
+import { Button, ButtonOutline } from "../ui/Button";
 import InfoMessage from "./InfoMessage";
 import classes from "./InputPressupost.module.css";
 
@@ -22,15 +22,9 @@ const InputPressupost = (props) => {
     numIdiomas: parseInt(searchParams.get("numIdiomas"))
       ? parseInt(searchParams.get("numIdiomas"))
       : 0,
-    preuWeb: parseInt(searchParams.get("preuWeb"))
-      ? parseInt(searchParams.get("preuWeb"))
-      : 0,
-    preuConsult: parseInt(searchParams.get("preuConsult"))
-      ? parseInt(searchParams.get("preuConsult"))
-      : 0,
-    preuAds: parseInt(searchParams.get("preuAds"))
-      ? parseInt(searchParams.get("preuAds"))
-      : 0,
+    preuWeb: parseInt(searchParams.get("preuWeb")) ? 500 : 0,
+    preuConsult: parseInt(searchParams.get("preuConsult")) ? 300 : 0,
+    preuAds: parseInt(searchParams.get("preuAds")) ? 200 : 0,
     nomPressupost: searchParams.get("nomPressupost")
       ? searchParams.get("nomPressupost")
       : "",
@@ -39,10 +33,7 @@ const InputPressupost = (props) => {
       : "",
   });
   const [isPanel, setIsPanel] = useState(
-    searchParams.get("numIdiomas") === "0" &&
-      searchParams.get("numPaginas") === "0"
-      ? false
-      : true
+    parseInt(searchParams.get("preuWeb")) ? true : false
   );
   const [showInfo, setShowInfo] = useState();
   const [isSubmit, setIsSubmit] = useState(false);
@@ -111,8 +102,10 @@ const InputPressupost = (props) => {
 
   const addTotalAmount = () => {
     let totalAmount =
+      (pressupost.preuWeb && pressupost.numPaginas) *
+        (pressupost.preuWeb && pressupost.numIdiomas) *
+        30 +
       pressupost.preuWeb +
-      pressupost.numPaginas * pressupost.numIdiomas * 30 +
       pressupost.preuConsult +
       pressupost.preuAds;
     setPressupost((prevState) => {
@@ -207,6 +200,17 @@ const InputPressupost = (props) => {
     }
   };
 
+  const copyURLHandler = () => {
+    navigator.clipboard.writeText(window.location.href).then(
+      () => {
+        alert("URL copiado correctamente!");
+      },
+      (err) => {
+        alert("Error al copiar");
+      }
+    );
+  };
+
   return (
     <PressupostContext.Provider value={[pressupost, setPressupost]}>
       {showInfo && (
@@ -289,9 +293,10 @@ const InputPressupost = (props) => {
               </p>
             )}
           </div>
-          <Button type="submit" className={classes.saveButton}>
-            Guardar
-          </Button>
+          <Button type="submit">Guardar</Button>
+          <ButtonOutline type="button" onClick={copyURLHandler}>
+            Copiar URL
+          </ButtonOutline>
         </form>
       </div>
     </PressupostContext.Provider>

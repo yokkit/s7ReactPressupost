@@ -1,23 +1,18 @@
-import React from 'react';
-import classes from './InfoMessage.module.css';
+import React from "react";
+import { BackgroundScreen, MainMessage } from "../ui/Modal";
 
-const InfoMessage = props =>{
-    const BackgroundScreen = props =>{
-        return <div className={classes.backgroundScreen} onClick={props.onConfirm}></div>
-    }
-    const MainMassage = props =>{
-        return (
-            <div className={classes.messageName}>
-                <p>En este componente debe indicar el <span>{props.name}</span> que tendrá su sitio web.</p>
-            </div>
-        )
-    }
-    return (
-        <React.Fragment>
-            <BackgroundScreen onConfirm={props.onConfirm}/>
-            <MainMassage onConfirm={props.onConfirm} name={props.name}/>
-        </React.Fragment>
-    );
-}
+const InfoMessage = (props) => {
+  return (
+    <React.Fragment>
+      <BackgroundScreen onConfirm={props.onConfirm}></BackgroundScreen>
+      <MainMessage name={props.name}>
+        <p>
+          En este componente debe indicar el <span>{props.name}</span> que
+          tendrá su sitio web.
+        </p>
+      </MainMessage>
+    </React.Fragment>
+  );
+};
 
 export default InfoMessage;

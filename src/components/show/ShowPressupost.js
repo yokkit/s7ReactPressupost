@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ShowPressupostItem from "./ShowPressupostItem";
 import styled from "styled-components";
-import Button from "../ui/Button";
+import { Button, ButtonOutline } from "../ui/Button";
 
 const ShowPressupostStyle = styled.div`
   background-color: rgba(255, 165, 0, 0.6);
@@ -14,7 +14,7 @@ const ShowPressupostStyle = styled.div`
 const ButtonsArea = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 5px;
 `;
 
 const SearchInputStyle = styled.div`
@@ -105,13 +105,13 @@ const ShowPressupost = (props) => {
           >
             Ordenar por &euro; Total
           </Button>
-          <Button
+          <ButtonOutline
             type="button"
             value="reset"
             onClick={(e) => setOrderKey(e.target.value)}
           >
-            Ordenar por inicio
-          </Button>
+            Estado inicial
+          </ButtonOutline>
         </ButtonsArea>
         <SearchInputStyle>
           <input
